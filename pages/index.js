@@ -1,6 +1,6 @@
 import React from "react";
 
-// import { client } from "../lib/client";
+import { client } from "../lib/client";
 import { Product, FooterBanner, HeroBanner } from "../components";
 
 const Home = ({ products, bannerData }) => (
@@ -10,14 +10,15 @@ const Home = ({ products, bannerData }) => (
       <h2>Best Seller Products</h2>
       <p>speaker There are many variations passages</p>
     </div>
-
+    //{" "}
     <div className="products-container">
+      //{" "}
       {products?.map((product) => (
         <Product key={product._id} product={product} />
       ))}
     </div>
-
-    <FooterBanner footerBanner={bannerData && bannerData[0]} />
+    // <FooterBanner footerBanner={bannerData && bannerData[0]} />
+    //{" "}
   </div>
 );
 
@@ -33,8 +34,8 @@ export const getServerSideProps = async () => {
   };
 };
 
-function Home() {
-  return <div>Home</div>;
-}
+// function Home() {
+//   return <div>Home</div>;
+// }
 
 export default Home;
