@@ -8,7 +8,8 @@ import {
 
 import { client, urlFor } from "../../lib/client";
 
-const ProductDetails = () => {
+const ProductDetails = ({ product, products }) => {
+  const { image, name, details, price } = product;
   return (
     <div>
       <div className="product-details-container">
@@ -19,21 +20,55 @@ const ProductDetails = () => {
               className="product-detail-image"
             />
           </div>
+          <div className="small-images-container">
+            {image?.map((item, i) => (
+              <img
+                key={i}
+                src={urlFor(item)}
+                className={
+                  i === index ? "small-image selected-image" : "small-image"
+                }
+                onMouseEnter={() => setIndex(i)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export const getStaticProps = async ({ params: { slug } }) => {
-  const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+export const getStaticPaths = async () => {
+  const query = `*[_type == "product"] {
+    slug {
+      current
+    }
+  }
+  `;
+
   const products = await client.fetch(query);
 
-  const bannerQuery = '*[_type == "banner"]';
-  const bannerData = await client.fetch(bannerQuery);
+  const paths = products.map((product) => ({
+    params: {
+      slug: product.slug.current,
+    },
+  }));
 
   return {
-    props: { products, bannerData },
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps = async ({ params: { slug } }) => {
+  const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+  const productsQuery = '*[_type == "product"]';
+
+  const product = await client.fetch(query);
+  const products = await client.fetch(productsQuery);
+
+  return {
+    props: { products, product },
   };
 };
 
