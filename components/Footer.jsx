@@ -1,16 +1,16 @@
-import React from "react";
-import { AiFillInstgram, AiOutlineTwitter } from "react-icons/ai";
+import React from 'react';
+import { AiFillInstagram, AiOutlineTwitter} from 'react-icons/ai';
 
 const Footer = () => {
   return (
     <div className="footer-container">
-      <p>2022 Rotary Central All rights reserved</p>
+      <p>2022 JSM Headphones All rights reserverd</p>
       <p className="icons">
-        <AiFillInstgram />
+        <AiFillInstagram />
         <AiOutlineTwitter />
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
